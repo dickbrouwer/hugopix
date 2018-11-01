@@ -200,7 +200,7 @@ func main() {
 	if err != nil {
 		log.Fatal("could not create output dir:", err)
 	}
-	index, err := os.Create(path.Join(target, "index.md"))
+	index, err := os.Create(path.Join(target, "_index.md"))
 	if err != nil {
 		log.Fatal("could not create output file:", err)
 	}
@@ -240,14 +240,12 @@ func main() {
 	fmt.Fprintln(ib, "categories = [\"photos\"]")
 	fmt.Fprintf(ib, "cover = \"%s\"\n", pix[0].Filename)
 	fmt.Fprintln(ib, "+++\n")
-	fmt.Fprintln(ib, "{{< wrap >}}")
 
 	for _, p := range pix {
 		// XXX should escape the filename and copyright
 		fmt.Fprintf(ib, "{{< photo\n    href=\"%s\" largeDim=\"%dx%d\"\n    smallUrl=\"%s\" smallDim=\"%dx%d\"\n    thumbSize=\"%dx%d\" thumbUrl=\"%s\"\n    title=\"\"\n    caption=\"\"\n    alt=\"\"\n    copyright=\"%s\" >}}\n", p.Filename, p.Width, p.Height, p.Small, p.SmallWidth, p.SmallHeight, thm_w, thm_h, p.Thumbnail, p.Copyright)
 	}
 
-	fmt.Fprintln(ib, "{{< /wrap >}}")
 	ib.Flush()
 
 	return
